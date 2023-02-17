@@ -4,6 +4,12 @@ import { catchErrors } from '../helpers/catchErrors';
 
 const router = Router();
 
+router.get('/', (req, res) => {
+  res.json({
+    'message': 'GUC Express server',
+  })
+})
+
 router.post('/registration', catchErrors(authController.registration));
 router.post('/login', catchErrors(authController.login));
 router.post('/logout', catchErrors(authController.logout));
