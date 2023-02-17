@@ -7,6 +7,7 @@ import commentsRouter from './routes/commentsRouter';
 import { errorMiddleware } from './middlewares/errorMiddleware';
 import * as dotenv from 'dotenv';
 import { ApiError } from './exceptions/apiError';
+import serverless from 'serverless-http';
 
 dotenv.config();
 
@@ -17,8 +18,8 @@ const app: Express = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors())
-app.use('/api', authRouter);
-app.use('/api', commentsRouter);
+app.use('/.netlify/functions/server/api', authRouter);
+app.use('/.netlify/functions/server/api', commentsRouter);
 app.use(errorMiddleware);
 
 const start = async () => {
@@ -30,11 +31,11 @@ const start = async () => {
     }
 
     await mongoose.connect(DB_URL);
-
-    app.listen(PORT, () => console.log(`⚡️[server]: Server started on port ${PORT}`));
   } catch (e) {
     console.log(e)
   }
 };
 
 start();
+
+export const handler = serverless(app);
