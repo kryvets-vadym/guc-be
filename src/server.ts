@@ -11,9 +11,7 @@ import serverless from 'serverless-http';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
-
-const app: Express = express();
+const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
